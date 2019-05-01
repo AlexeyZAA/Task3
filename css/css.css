@@ -1,0 +1,17 @@
+.borderPole{
+    border: 2px solid #808080;
+    border-radius: 10px;
+    padding: 5px;
+    width: 415px;
+    height: 415px;
+}
+.box{
+    width: 100px;
+    height: 100px;
+    border: 1px solid #808080;
+    float: left;
+    background-color: rgb(255,255,255);
+}
+.rowbox{
+    height:100px;
+}
