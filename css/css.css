@@ -1,3 +1,4 @@
+/*Стиль для поля*/
 .borderPole{
     border: 2px solid #808080;
     border-radius: 10px;
@@ -5,6 +6,7 @@
     width: 415px;
     height: 415px;
 }
+/*стиль для квадратов*/
 .box{
     width: 100px;
     height: 100px;

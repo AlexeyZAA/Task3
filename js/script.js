@@ -8,10 +8,12 @@ $(document).ready(function () {
     var indexTwoTmp;
 //обработчик кнопки старт
     $('#btnStart').click(function () {
+        timer_id = null;
         var seconds = 0;
         timer_id = setInterval(function () {
             seconds++;
-            var time = moment(seconds, "ss").format("HH:mm:ss");
+            var time = moment.utc(seconds*1000).format('HH:mm:ss');
+            //var time = moment(seconds, "ss").format("HH:mm:ss");
             $('#timer').text(time);
         }, 1000);
         //очищаем клетки
