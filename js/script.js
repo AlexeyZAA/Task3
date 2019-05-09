@@ -2,18 +2,22 @@ $(document).ready(function () {
     //создаем поле игры
     drawPole();
     var colorDuble = ['', ''];
-    var mixArr =[];
-    var timer_id;
+    var mixArr = [];
+    var timer_id = null;
     var indexOneTmp;
     var indexTwoTmp;
 //обработчик кнопки старт
     $('#btnStart').click(function () {
-        timer_id = null;
+        //при повторном нажатии проверяем есть ли активный таймер, если да то останавливаем
+        if (timer_id !== null) {
+            clearInterval(timer_id);
+            timer_id = null;
+        }
         var seconds = 0;
+        //вешаем таймер
         timer_id = setInterval(function () {
             seconds++;
-            var time = moment.utc(seconds*1000).format('HH:mm:ss');
-            //var time = moment(seconds, "ss").format("HH:mm:ss");
+            var time = moment.utc(seconds * 1000).format('HH:mm:ss');
             $('#timer').text(time);
         }, 1000);
         //очищаем клетки
@@ -26,11 +30,20 @@ $(document).ready(function () {
         colorDuble[1] = '';
     });
     $('#btnStop').click(function () {
-        getTimeEnd(timer_id);
+        if (timer_id !== null) {
+            clearInterval(timer_id);
+            timer_id = null;
+            mixArr = [];
+            $('div .box').each(function (index, block) {
+                block.style.backgroundColor = 'rgb(255,255,255)';
+            });
+            $('#timer').text('00:00:00');
+            alert('Игра окончена');
+        }
     });
 //обработчик нажатий на боксы
     $('div .box').click(function () {
-        if(mixArr.length != 16){
+        if (mixArr.length != 16) {
             alert('Начните игру нажав старт');
             return false;
         }
@@ -63,9 +76,10 @@ $(document).ready(function () {
                     //проверяем закончилась ли игра
                     var end = getTimeEnd();
                     if (end == 1) {
-                        var timeend = $('#timer').text();
+                        let timeend = $('#timer').text();
                         clearInterval(timer_id);
-                        alert('Вы выиграли!\n Затраченное время: '+timeend);
+                        timer_id = null;
+                        alert('Вы выиграли!\n Затраченное время: ' + timeend);
                     }
                 }
 
@@ -107,7 +121,6 @@ function drawPole() {
         $('#borderPoleBox').append('<div class="rowbox" id="rowbox' + i + '"></div>');
         for (let j = 0; j < 4; j++) {
             $('#rowbox' + i).append('<div class="box"' + ' ' + 'id="box' + i + j + '"></div>');
-            //$('#rowbox' + i).append('<div class="box"></div>');
         }
     }
 }
